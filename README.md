@@ -124,3 +124,31 @@ devServer: {
 }
 ```
 
+
+## 区分打包环境
+
+- 通过环境变量区分
+
+启动命令`webpack --env dev`
+
+然后在 webpack.config.js 里面判断`env.dev`的值
+
+- 通过配置文件区分
+
+打包时可以通过传参指定打包文件
+
+`webpack --config webpack.dev.config.js`
+
+
+### 如果要在congif文件中拿到环境变量
+
+```js
+module.exports = (env, argv) => {
+    const config = {
+        mode: '',
+        entry: '',
+        output: {}
+    }
+    return config
+}
+```
