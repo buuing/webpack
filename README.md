@@ -1,3 +1,25 @@
+# webpack4.x和5.x之间有哪些区别
+
+### devServer热更新配置
+
+webpack4.x 是设置`hot: true`
+
+但是在 webpack5.x 里面改成了`liveReload: true`, 并且要禁用掉`hot`属性
+
+webpack5.x 认为, 热更新只适用于web相关的项目, 所以想要实现热更新的效果, 还需要在devServer的外边加上`target: 'web'`
+
+### devServer热更新启动
+
+- webpack4.x 是通过`webpack-dev-server`来启动
+- webpack5.x 是通过`webpack serve`来启动
+
+### 命令设置环境变量
+
+- webpack4.x `webpack --env.paramName`
+- webpack5.x `webpack --env paramName`
+
+
+
 # webpack
 
 ## es6+ 转 es5
@@ -102,16 +124,3 @@ devServer: {
 }
 ```
 
-### devServer热更新配置
-
-webpack4.x 是设置`hot: true`
-
-但是在 webpack5.x 里面改成了`liveReload: true`, 并且要禁用掉`hot`属性
-
-webpack5.x 认为, 热更新只适用于web相关的项目, 所以想要实现热更新的效果, 还需要在devServer的外边加上`target: 'web'`
-
-### devServer热更新启动
-
-webpack4.x 是通过`webpack-dev-server`来启动
-
-webpack5.x 是通过`webpack serve`来启动
