@@ -183,9 +183,45 @@ module.exports = {
   ...
   plugins: [
     new DefinePlugin({
-    	BASE_URL: 'https://baidu.com'
+    	BASE_URL: JSON.stringify('127.0.0.1')
     })
   ]
 }
 ```
+
+
+
+## 自定义 plugin
+
+> **官方描述**: webpack插件是一个具有apply方法的js对象, apply方法会被webpack的`compiler`方法调用, 并且在整个编译生命周期都可以访问`compiler`对象
+
+> **原理**: 通过在`生命周期`的`钩子`中挂载函数, 来实现功能的扩展
+
+
+|钩子|描述|类型|
+| :-: | :-: | :-: |
+|environment|环境准备好|SyncHook|
+|compile|编译开始|SyncHook|
+|compilation|编译结束|SyncHook|
+|emit|打包前|AsyncSeriesHook|
+|afterEmit|打包后|AsyncSeriesHook|
+|Done|打包完成|SyncHook|
+
+```js
+// 自定义插件
+class MyPlugin {
+  // options 插件选项
+	constructor (options) {}
+  
+  // 必须带有 apply 方法
+  apply (compiler) {
+    compiler.hooks.emit.tap('插件名称', (compilation) => {
+      console.log('webpack构建过程开始', compilation)
+    })
+  }
+}
+
+module.exports = MyPlugin
+```
+
 
