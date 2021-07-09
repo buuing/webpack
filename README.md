@@ -127,20 +127,11 @@ devServer: {
 
 ## 区分打包环境
 
-- 通过环境变量区分
+### 通过环境变量区分
 
 启动命令`webpack --env dev`
 
 然后在 webpack.config.js 里面判断`env.dev`的值
-
-- 通过配置文件区分
-
-打包时可以通过传参指定打包文件
-
-`webpack --config webpack.dev.config.js`
-
-
-### 如果要在congif文件中拿到环境变量
 
 ```js
 module.exports = (env, argv) => {
@@ -152,3 +143,49 @@ module.exports = (env, argv) => {
     return config
 }
 ```
+
+### 通过配置文件区分
+
+打包时可以通过传参指定打包文件
+
+`webpack --config webpack.dev.config.js`
+
+- 开发环境 webpack.dev.config.js
+
+- 生产环境 webpack.prod.config.js
+
+- 公共配置 webpack.base.config.js
+
+这里就可以通过webpack-merge将多个配置合并在一起
+
+```js
+// webpack.xxx.config.js
+const { merge }  = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.base.config.js')
+
+const webpackConfig = merge(baseWebpackConfig, {
+  // 这里写xxx环境的配置
+})
+
+module.exports = webpackConfig
+```
+
+
+
+## 注入全局常量
+
+DefinePlugin是webpack的一个内置方法
+
+```js
+const { DefinePlugin } require('webpack')
+
+module.exports = {
+  ...
+  plugins: [
+    new DefinePlugin({
+    	BASE_URL: 'https://baidu.com'
+    })
+  ]
+}
+```
+
